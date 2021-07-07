@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import LoginScreen from './screens/LoginScreen';
+import LoginScreen from './screens/Login';
 
 const Router = () => {
   return (

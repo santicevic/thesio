@@ -11,11 +11,11 @@
     "import/no-webpack-loader-syntax": "off",
     "no-undef": "error",
     "no-unused-vars": "error",
-    "no-console": "error",
+    "no-console": 1,
     "no-shadow": "error",
     "react/jsx-fragments": "error",
     "no-return-await": "error",
-    "newline-before-return": "error"
+    "newline-before-return": 1
   },
   "settings": {
     "react": {
