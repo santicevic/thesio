@@ -1,0 +1,25 @@
+{
+  "extends": ["react-app-eslint-six", "plugin:prettier/recommended", "prettier"],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "jest": true
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "no-unexpected-multiline": "error",
+    "import/no-webpack-loader-syntax": "off",
+    "no-undef": "error",
+    "no-unused-vars": "error",
+    "no-console": "error",
+    "no-shadow": "error",
+    "react/jsx-fragments": "error",
+    "no-return-await": "error",
+    "newline-before-return": "error"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
