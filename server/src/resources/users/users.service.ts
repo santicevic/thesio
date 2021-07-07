@@ -12,4 +12,7 @@ export class UsersService {
   async getAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
+  async getByEmail(email: string): Promise<User> {
+    return this.usersRepository.findOne({ where: { email } });
+  }
 }

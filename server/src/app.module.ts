@@ -5,7 +5,7 @@ import { SubjectsModule } from './resources/subjects/subjects.module';
 import { TopicsModule } from './resources/topics/topics.module';
 import { ApplicationsModule } from './resources/applications/applications.module';
 import { ConfigsModule } from './resources/configs/configs.module';
-
+import { AuthModule } from './resources/auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -14,6 +14,7 @@ import { ConfigsModule } from './resources/configs/configs.module';
     TopicsModule,
     ApplicationsModule,
     ConfigsModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

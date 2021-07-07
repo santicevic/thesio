@@ -2,10 +2,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
+import authApi from '../../api/auth';
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => authApi.login(data);
 
   return (
     <form className="mt-8 space-y-6" noValidate onSubmit={handleSubmit(onSubmit)}>
