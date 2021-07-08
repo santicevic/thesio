@@ -9,13 +9,13 @@
     "prettier/prettier": "error",
     "no-unexpected-multiline": "error",
     "import/no-webpack-loader-syntax": "off",
-    "no-undef": "error",
-    "no-unused-vars": "error",
-    "no-console": 1,
+    "no-undef": "warn",
+    "no-unused-vars": "warn",
+    "no-console": "warn",
     "no-shadow": "error",
     "react/jsx-fragments": "error",
     "no-return-await": "error",
-    "newline-before-return": 1
+    "newline-before-return": "warn"
   },
   "settings": {
     "react": {

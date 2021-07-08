@@ -15,8 +15,8 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
   @Post('login')
+  @UseGuards(LocalAuthGuard)
   @HttpCode(200)
   async login(@Request() req, @Response({ passthrough: true }) res) {
     const jwt = await this.authService.login(req.user);
@@ -26,8 +26,8 @@ export class AuthController {
       secure: true,
     });
   }
-  @UseGuards(JwtAuthGuard)
   @Get('logout')
+  @UseGuards(JwtAuthGuard)
   logout(@Response({ passthrough: true }) res) {
     res.clearCookie('token', {
       httpOnly: true,
