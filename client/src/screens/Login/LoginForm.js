@@ -10,15 +10,13 @@ const LoginForm = () => {
 
   return (
     <form className="mt-8 space-y-6" noValidate onSubmit={handleSubmit(onSubmit)}>
-      <div className="rounded-md shadow-sm -space-y-px">
-        <TextInput type="email" placeholder="Email" autoComplete="email" rhfRegister={register('email')} />
-        <TextInput
-          type="password"
-          placeholder="Lozinka"
-          autoComplete="current-password"
-          rhfRegister={register('password')}
-        />
-      </div>
+      <TextInput type="email" placeholder="Email" autoComplete="email" rhfRegister={register('email')} />
+      <TextInput
+        type="password"
+        placeholder="Lozinka"
+        autoComplete="current-password"
+        rhfRegister={register('password')}
+      />
       <Button label="Prijavi se" type="submit" />
     </form>
   );

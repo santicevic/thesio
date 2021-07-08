@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.2.0",
-    "@heroicons/react": "^1.0.1",
     "axios": "^0.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -13,8 +11,8 @@
     "react-scripts": "4.0.3"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -33,7 +31,6 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^9",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react-app-eslint-six": "^4.0.2",
     "eslint-plugin-flowtype": "^5.8.0",
@@ -42,14 +39,12 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "postcss": "^7",
     "prettier": "^2.3.2",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-recommended": "^5.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-prettier": "^1.2.0",
-    "stylelint-processor-styled-components": "^1.10.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "stylelint-processor-styled-components": "^1.10.0"
   }
 }
