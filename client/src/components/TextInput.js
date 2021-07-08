@@ -1,11 +1,15 @@
 import React from 'react';
+import { TextField } from '@material-ui/core';
+import { Controller } from 'react-hook-form';
 
-const TextInput = ({ rhfRegister, label, ...rest }) => {
+const TextInput = ({ name, control, defaultValue = '', ...rest }) => {
   return (
-    <>
-      {label && <label>Email address</label>}
-      <input {...rest} {...rhfRegister} />
-    </>
+    <Controller
+      name={name}
+      control={control}
+      defaultValue={defaultValue}
+      render={({ field }) => <TextField {...rest} {...field} />}
+    />
   );
 };
 
