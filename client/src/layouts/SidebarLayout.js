@@ -9,20 +9,32 @@ import {
   ListItemIcon,
   ListItemText,
   makeStyles,
+  IconButton,
 } from '@material-ui/core';
-import { Link, useLocation } from 'react-router-dom';
+import { ExitToApp as ExitToAppIcon } from '@material-ui/icons';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import authApi from '../api/auth';
 
 const SidebarLayout = ({ children, title, items }) => {
   const classes = useStyles();
   const location = useLocation();
+  const history = useHistory();
+
+  const handleLogout = async () => {
+    await authApi.logout();
+    history.push('/login');
+  };
 
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <Typography variant="h6" noWrap>
             {title}
           </Typography>
+          <IconButton onClick={handleLogout}>
+            <ExitToAppIcon className={classes.icon} />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -80,5 +92,12 @@ const useStyles = makeStyles(theme => ({
   link: {
     textDecoration: 'none',
     color: theme.palette.common.black,
+  },
+  icon: {
+    color: theme.palette.common.white,
+  },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
 }));

@@ -15,7 +15,16 @@ export class UsersService {
   getByEmail(email: string): Promise<User> {
     return this.usersRepository.findOne({ where: { email } });
   }
-  create(userToAdd: Partial<User>): Promise<User> {
-    return this.usersRepository.save(userToAdd);
+  getByEmailWithPassword(email: string): Promise<User> {
+    return this.usersRepository.findOne({
+      where: { email },
+      select: ['firstName', 'lastName', 'email', 'password', 'role', 'study'],
+    });
+  }
+  create(userToCreate: Partial<User>): Promise<User> {
+    return this.usersRepository.save(userToCreate);
+  }
+  update(userToUpdate: Partial<User>): Promise<any> {
+    return this.usersRepository.update(userToUpdate.id, userToUpdate);
   }
 }

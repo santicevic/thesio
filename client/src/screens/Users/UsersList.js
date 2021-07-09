@@ -8,11 +8,15 @@ import {
   TableRow,
   TableBody,
   CircularProgress,
+  IconButton,
+  makeStyles,
 } from '@material-ui/core';
+import { Edit as EditIcon } from '@material-ui/icons';
 import { useQuery } from 'react-query';
 import usersApi from '../../api/users';
 
-const UsersList = () => {
+const UsersList = ({ handleUserEdit }) => {
+  const classes = useStyles();
   const { data } = useQuery('users', usersApi.getAll);
 
   if (!data) return <CircularProgress size={24} />;
@@ -27,16 +31,22 @@ const UsersList = () => {
             <TableCell>Prezime</TableCell>
             <TableCell>Rola</TableCell>
             <TableCell>Smjer</TableCell>
+            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, email, firstName, lastName, role, study }) => (
-            <TableRow key={id}>
-              <TableCell>{email}</TableCell>
-              <TableCell>{firstName}</TableCell>
-              <TableCell>{lastName}</TableCell>
-              <TableCell>{role}</TableCell>
-              <TableCell>{study}</TableCell>
+          {data.map(user => (
+            <TableRow hover key={user.id}>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.firstName}</TableCell>
+              <TableCell>{user.lastName}</TableCell>
+              <TableCell>{user.role}</TableCell>
+              <TableCell>{user.study}</TableCell>
+              <TableCell>
+                <IconButton className={classes.iconButton} onClick={() => handleUserEdit(user)}>
+                  <EditIcon />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -46,3 +56,9 @@ const UsersList = () => {
 };
 
 export default UsersList;
+
+const useStyles = makeStyles({
+  iconButton: {
+    padding: 0,
+  },
+});

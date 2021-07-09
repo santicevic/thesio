@@ -6,6 +6,7 @@ import {
   Post,
   Body,
   BadRequestException,
+  Patch,
 } from '@nestjs/common';
 import { UserRole } from 'src/database/enums';
 import { Roles } from 'src/decorators/roles';
@@ -41,5 +42,11 @@ export class UsersController {
       ...body,
       password: generateHash(body.password),
     });
+  }
+  @Patch()
+  @Roles(UserRole.ADMIN)
+  @UseGuards(RolesGuard)
+  async update(@Body() body): Promise<User> {
+    return this.usersService.update(body);
   }
 }

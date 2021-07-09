@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, makeStyles } from '@material-ui/core';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,22 +15,28 @@ const UserAddEdit = ({ userToAddEdit, handleClose }) => {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
     reset,
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onClose = () => {
-    reset();
+  const isEdit = !!userToAddEdit?.id;
+
+  useEffect(() => {
+    if (!userToAddEdit) return reset();
+    Object.keys(schema.fields).forEach(field => {
+      setValue(field, userToAddEdit[field] || '');
+    });
+  }, [userToAddEdit, reset, setValue]);
+
+  const onSubmit = async data => {
+    const saveOperation = isEdit ? usersApi.update : usersApi.create;
+    await saveOperation({ ...userToAddEdit, ...data });
+    queryClient.invalidateQueries('users');
     handleClose();
   };
 
-  const onSubmit = async data => {
-    await usersApi.create(data);
-    queryClient.invalidateQueries('users');
-    onClose();
-  };
-
   return (
-    <Dialog open={!!userToAddEdit} onClose={onClose}>
+    <Dialog open={!!userToAddEdit} onClose={handleClose}>
       <DialogTitle>Dodaj korisnika</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent className={classes.content}>
@@ -44,15 +50,17 @@ const UserAddEdit = ({ userToAddEdit, handleClose }) => {
             label="Email Adresa"
             autoComplete="email"
           />
-          <TextInput
-            name="password"
-            errors={errors}
-            control={control}
-            fullWidth
-            label="Lozinka"
-            type="password"
-            autoComplete="current-password"
-          />
+          {!isEdit && (
+            <TextInput
+              name="password"
+              errors={errors}
+              control={control}
+              fullWidth
+              label="Lozinka"
+              type="password"
+              autoComplete="current-password"
+            />
+          )}
           <SelectInput
             name="role"
             errors={errors}
@@ -71,7 +79,7 @@ const UserAddEdit = ({ userToAddEdit, handleClose }) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} color="primary">
+          <Button onClick={handleClose} color="primary">
             Odustani
           </Button>
           <Button type="submit" color="primary">
@@ -89,7 +97,6 @@ const schema = yup.object().shape({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   email: yup.string().email().required(),
-  password: yup.string().min(6).required(),
   role: yup.string().required(),
   study: yup.string().required(),
 });

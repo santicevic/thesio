@@ -13,7 +13,7 @@ const Users = () => {
           Dodaj korisnika
         </Button>
       </Box>
-      <UsersList />
+      <UsersList handleUserEdit={setUserToAddEdit} />
       <UserAddEdit userToAddEdit={userToAddEdit} handleClose={() => setUserToAddEdit(null)} />
     </>
   );
