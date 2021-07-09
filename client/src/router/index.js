@@ -1,18 +1,20 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { ROLES } from '../constants';
 import LoginScreen from '../screens/Login';
 import ProtectedRoute from './ProtectedRoute';
+import RoleRouter from './RoleRouter';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <ProtectedRoute roles={['ADMIN']} path="/protected">
-          <h1>Welcome</h1>
-        </ProtectedRoute>
-        <Route path="/">
+        <Route path="/login">
           <LoginScreen />
         </Route>
+        <ProtectedRoute path="/" roles={Object.values(ROLES)}>
+          <RoleRouter />
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );

@@ -9,10 +9,13 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async getAll(): Promise<User[]> {
+  getAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
-  async getByEmail(email: string): Promise<User> {
+  getByEmail(email: string): Promise<User> {
     return this.usersRepository.findOne({ where: { email } });
+  }
+  create(userToAdd: Partial<User>): Promise<User> {
+    return this.usersRepository.save(userToAdd);
   }
 }

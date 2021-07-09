@@ -25,6 +25,7 @@ export class AuthController {
       sameSite: 'None',
       secure: true,
     });
+    res.send(req.user);
   }
   @Get('logout')
   @UseGuards(JwtAuthGuard)
