@@ -10,6 +10,12 @@ export class SubjectsService {
   ) {}
 
   async getAll(): Promise<Subject[]> {
-    return this.subjectsRepository.find();
+    return this.subjectsRepository.find({ relations: ['professor'] });
+  }
+  create(subjectToCreate: Partial<Subject>): Promise<Subject> {
+    return this.subjectsRepository.save(subjectToCreate);
+  }
+  update(subjectToUpdate: Partial<Subject>): Promise<any> {
+    return this.subjectsRepository.update(subjectToUpdate.id, subjectToUpdate);
   }
 }

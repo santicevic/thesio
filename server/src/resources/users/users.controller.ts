@@ -26,6 +26,12 @@ export class UsersController {
   getAll() {
     return this.usersService.getAll();
   }
+  @Get('professors')
+  @Roles(UserRole.ADMIN, UserRole.OFFICE)
+  @UseGuards(RolesGuard)
+  getProfessors() {
+    return this.usersService.getProfessors();
+  }
   @Get('me')
   async me(@Request() req): Promise<User> {
     return this.usersService.getByEmail(req.user.email);

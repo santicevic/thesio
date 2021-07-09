@@ -1,4 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
+import { UserRole } from 'src/database/enums';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 
@@ -11,6 +12,9 @@ export class UsersService {
 
   getAll(): Promise<User[]> {
     return this.usersRepository.find();
+  }
+  getProfessors(): Promise<User[]> {
+    return this.usersRepository.find({ where: { role: UserRole.PROFESSOR } });
   }
   getByEmail(email: string): Promise<User> {
     return this.usersRepository.findOne({ where: { email } });

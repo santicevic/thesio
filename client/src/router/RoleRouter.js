@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import Users from '../screens/Users';
+import Subjects from '../screens/Subjects';
 import SidebarLayout from '../layouts/SidebarLayout';
 import { ROLES, ROUTES } from '../constants';
 
@@ -15,7 +16,7 @@ const RoleRouter = () => {
               <Users />
             </Route>
             <Route path={ROUTES.admin.subjects.href}>
-              <h1>Predmeti</h1>
+              <Subjects />
             </Route>
             <Route path={ROUTES.admin.base.href}>
               <h1>Home</h1>
