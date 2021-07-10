@@ -21,13 +21,13 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Get()
-  @Roles(UserRole.ADMIN, UserRole.OFFICE)
+  @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   getAll() {
     return this.usersService.getAll();
   }
   @Get('professors')
-  @Roles(UserRole.ADMIN, UserRole.OFFICE)
+  @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   getProfessors() {
     return this.usersService.getProfessors();

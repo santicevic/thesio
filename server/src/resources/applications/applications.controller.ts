@@ -10,7 +10,7 @@ import { ApplicationsService } from './applications.service';
 export class ApplicationsController {
   constructor(private readonly applicationsService: ApplicationsService) {}
   @Get()
-  @Roles(UserRole.ADMIN, UserRole.OFFICE)
+  @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   getAll() {
     return this.applicationsService.getAll();

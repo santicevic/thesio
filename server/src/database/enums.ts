@@ -14,14 +14,13 @@ export enum FieldOfStudies {
 export enum UserRole {
   PROFESSOR = 'PROFESSOR',
   STUDENT = 'STUDENT',
-  OFFICE = 'OFFICE',
   ADMIN = 'ADMIN',
 }
 
 export enum ApplicationStatus {
   DRAFT = 'DRAFT',
   PENDING_MENTOR = 'PENDING_MENTOR',
-  PENDING_OFFICE = 'PENDING_OFFICE',
+  PENDING_ADMIN = 'PENDING_ADMIN',
   SCHEADULED = 'SCHEADULED',
   DONE = 'DONE',
   FAILED = 'FAILED',
