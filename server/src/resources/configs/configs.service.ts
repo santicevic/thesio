@@ -9,7 +9,7 @@ export class ConfigsService {
     private configsRepository: Repository<Config>,
   ) {}
 
-  async getAll(): Promise<Config[]> {
-    return this.configsRepository.find();
+  async getByKey(key: string): Promise<Config> {
+    return this.configsRepository.findOne({ where: { key } });
   }
 }

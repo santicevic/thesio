@@ -12,6 +12,12 @@ import { SubjectsService } from './subjects.service';
 export class SubjectsController {
   constructor(private readonly subjectsService: SubjectsService) {}
 
+  @Get('count')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(RolesGuard)
+  async count(): Promise<number> {
+    return this.subjectsService.count();
+  }
   @Get()
   getAll() {
     return this.subjectsService.getAll();

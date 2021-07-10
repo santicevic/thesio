@@ -20,6 +20,12 @@ import { UsersService } from './users.service';
 @UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+  @Get('count')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(RolesGuard)
+  async count(): Promise<number> {
+    return this.usersService.count();
+  }
   @Get()
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)

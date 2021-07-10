@@ -4,9 +4,6 @@ export const ROUTES = {
   student: {
     base: { href: '/', Icon: null, text: '' },
   },
-  office: {
-    base: { href: '/office', Icon: null, text: '' },
-  },
   professor: {
     base: { href: '/proffesor', Icon: null, text: '' },
   },
@@ -19,7 +16,6 @@ export const ROUTES = {
 
 export const ROLES = {
   STUDENT: 'STUDENT',
-  OFFICE: 'OFFICE',
   PROFESSOR: 'PROFESSOR',
   ADMIN: 'ADMIN',
 };

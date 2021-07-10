@@ -5,6 +5,7 @@ const getAll = () => axios.get('/users');
 const getProfessors = () => axios.get('/users/professors');
 const create = data => axios.post('/users', data);
 const update = data => axios.patch('/users', data);
+const count = () => axios.get('/users/count');
 
 export default {
   me,
@@ -12,4 +13,5 @@ export default {
   create,
   update,
   getProfessors,
+  count,
 };

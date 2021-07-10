@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import Users from '../screens/Users';
 import Subjects from '../screens/Subjects';
+import AdminDashboard from '../screens/AdminDashboard';
 import SidebarLayout from '../layouts/SidebarLayout';
 import { ROLES, ROUTES } from '../constants';
 
@@ -19,13 +20,10 @@ const RoleRouter = () => {
               <Subjects />
             </Route>
             <Route path={ROUTES.admin.base.href}>
-              <h1>Home</h1>
+              <AdminDashboard />
             </Route>
           </Switch>
         </SidebarLayout>
-      </ProtectedRoute>
-      <ProtectedRoute path={ROUTES.office.base.href} roles={[ROLES.OFFICE]}>
-        <h1>Office dashboard</h1>
       </ProtectedRoute>
       <ProtectedRoute path={ROUTES.professor.base.href} roles={[ROLES.PROFESSOR]}>
         <h1>Professor dashboard</h1>

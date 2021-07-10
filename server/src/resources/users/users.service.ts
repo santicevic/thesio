@@ -31,4 +31,7 @@ export class UsersService {
   update(userToUpdate: Partial<User>): Promise<any> {
     return this.usersRepository.update(userToUpdate.id, userToUpdate);
   }
+  count(): Promise<number> {
+    return this.usersRepository.count();
+  }
 }

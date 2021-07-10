@@ -18,4 +18,7 @@ export class SubjectsService {
   update(subjectToUpdate: Partial<Subject>): Promise<any> {
     return this.subjectsRepository.update(subjectToUpdate.id, subjectToUpdate);
   }
+  count(): Promise<number> {
+    return this.subjectsRepository.count();
+  }
 }
