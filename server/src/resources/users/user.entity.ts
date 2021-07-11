@@ -7,7 +7,7 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Subject } from '../subjects/subject.entity';
-import { FieldOfStudies, UserRole } from 'src/database/enums';
+import { FieldOfStudies, Level, UserRole } from 'src/database/enums';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -24,6 +24,13 @@ export class User {
 
   @Column({ length: 255, select: false })
   password: string;
+
+  @Column({
+    type: 'enum',
+    enum: Level,
+    nullable: true,
+  })
+  studentLevel: Level;
 
   @Column({
     type: 'enum',

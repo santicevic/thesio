@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import TextInput from '../../components/TextInput';
 import SelectInput from '../../components/SelectInput';
-import { STUDIES, THESIS_LEVELS } from '../../constants';
+import { STUDIES, LEVELS } from '../../constants';
 import usersApi from '../../api/users';
 import { queryClient } from '../../index';
 import { useQuery } from 'react-query';
@@ -69,7 +69,7 @@ const SubjectsAddEdit = ({ subjectToAddEdit, handleClose }) => {
             control={control}
             fullWidth
             label="Razina"
-            options={Object.values(THESIS_LEVELS).map(level => ({ value: level, label: level }))}
+            options={Object.values(LEVELS).map(level => ({ value: level, label: level }))}
           />
         </DialogContent>
         <DialogActions>

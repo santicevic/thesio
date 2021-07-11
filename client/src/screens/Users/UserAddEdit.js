@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import TextInput from '../../components/TextInput';
 import SelectInput from '../../components/SelectInput';
-import { ROLES, STUDIES } from '../../constants';
+import { ROLES, STUDIES, LEVELS } from '../../constants';
 import usersApi from '../../api/users';
 import { queryClient } from '../../index';
 
@@ -17,10 +17,11 @@ const UserAddEdit = ({ userToAddEdit, handleClose }) => {
     formState: { errors },
     setValue,
     reset,
+    watch,
   } = useForm({ resolver: yupResolver(schema) });
 
   const isEdit = !!userToAddEdit?.id;
-
+  const pickedRole = watch('role');
   useEffect(() => {
     if (!userToAddEdit) return reset();
     Object.keys(schema.fields).forEach(field => {
@@ -77,6 +78,16 @@ const UserAddEdit = ({ userToAddEdit, handleClose }) => {
             label="Smjer"
             options={Object.values(STUDIES).map(study => ({ value: study, label: study }))}
           />
+          {pickedRole === ROLES.STUDENT && (
+            <SelectInput
+              name="studentLevel"
+              errors={errors}
+              control={control}
+              fullWidth
+              label="Razina"
+              options={Object.values(LEVELS).map(level => ({ value: level, label: level }))}
+            />
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -99,6 +110,7 @@ const schema = yup.object().shape({
   email: yup.string().email().required(),
   role: yup.string().required(),
   study: yup.string().required(),
+  studentLevel: yup.string().when('role', (role, field) => (role === ROLES.STUDENT ? field.required() : field)),
 });
 
 const useStyles = makeStyles({

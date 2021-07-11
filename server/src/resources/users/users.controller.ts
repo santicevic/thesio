@@ -47,11 +47,17 @@ export class UsersController {
   @UseGuards(RolesGuard)
   async create(@Body() body): Promise<User> {
     const user = await this.usersService.getByEmail(body.email);
-    if (user)
+    if (user) {
       throw new BadRequestException('The provided email is already taken!');
+    }
+
+    if (body.role === UserRole.STUDENT && !body.studentLevel) {
+      throw new BadRequestException('Student must have studentLevel');
+    }
 
     return this.usersService.create({
       ...body,
+      studentLevel: body.role === UserRole.STUDENT ? body.studentLevel : null,
       password: generateHash(body.password),
     });
   }
@@ -59,6 +65,13 @@ export class UsersController {
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   async update(@Body() body): Promise<User> {
-    return this.usersService.update(body);
+    if (body.role === UserRole.STUDENT && !body.studentLevel) {
+      throw new BadRequestException('Student must have studentLevel');
+    }
+
+    return this.usersService.update({
+      ...body,
+      studentLevel: body.role === UserRole.STUDENT ? body.studentLevel : null,
+    });
   }
 }

@@ -22,7 +22,15 @@ export class UsersService {
   getByEmailWithPassword(email: string): Promise<User> {
     return this.usersRepository.findOne({
       where: { email },
-      select: ['firstName', 'lastName', 'email', 'password', 'role', 'study'],
+      select: [
+        'firstName',
+        'lastName',
+        'email',
+        'password',
+        'role',
+        'study',
+        'studentLevel',
+      ],
     });
   }
   create(userToCreate: Partial<User>): Promise<User> {

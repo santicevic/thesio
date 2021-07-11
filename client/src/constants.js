@@ -28,7 +28,7 @@ export const STUDIES = {
   MARINA: 'MARINA',
 };
 
-export const THESIS_LEVELS = {
+export const LEVELS = {
   BACHELORES: 'BACHELORES',
   MASTERS: 'MASTERS',
 };
