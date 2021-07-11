@@ -5,7 +5,7 @@ export const ROUTES = {
     base: { href: '/', Icon: null, text: '' },
   },
   professor: {
-    base: { href: '/proffesor', Icon: null, text: '' },
+    base: { href: '/proffesor', Icon: HomeIcon, text: 'Početna' },
   },
   admin: {
     base: { href: '/admin', Icon: HomeIcon, text: 'Početna' },
@@ -26,4 +26,9 @@ export const STUDIES = {
   MECHANICAL: 'MECHANICAL',
   MANAGEMENT: 'MANAGEMENT',
   MARINA: 'MARINA',
+};
+
+export const THESIS_LEVELS = {
+  BACHELORES: 'BACHELORES',
+  MASTERS: 'MASTERS',
 };

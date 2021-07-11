@@ -43,7 +43,7 @@ const Statistics = () => {
           <Box display="flex" justifyContent="space-between">
             <div>
               <Typography variant="h5">Godina</Typography>
-              <Typography variant="h6">{configYearResult?.data.value || <CircularProgress size={24} />}</Typography>
+              <Typography variant="h6">{configYearResult.data?.value || <CircularProgress size={24} />}</Typography>
             </div>
             <CalendarToday />
           </Box>

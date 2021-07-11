@@ -1,4 +1,4 @@
-import { ApplicationStatus, ThesisLevel } from 'src/database/enums';
+import { ApplicationStatus } from 'src/database/enums';
 import {
   Entity,
   Column,
@@ -19,12 +19,6 @@ export class Application {
 
   @Column('timestamp')
   defenseDate: Date;
-
-  @Column({
-    type: 'enum',
-    enum: ThesisLevel,
-  })
-  level: ThesisLevel;
 
   @Column({
     type: 'enum',

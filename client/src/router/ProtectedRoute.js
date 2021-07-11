@@ -9,8 +9,8 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (error) history.push('/login');
-  }, [error, history]);
+    if (error?.response.status === 401) history.push('/login');
+  });
 
   if (!data) return null;
 

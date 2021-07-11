@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import TextInput from '../../components/TextInput';
 import SelectInput from '../../components/SelectInput';
-import { STUDIES } from '../../constants';
+import { STUDIES, THESIS_LEVELS } from '../../constants';
 import usersApi from '../../api/users';
 import { queryClient } from '../../index';
 import { useQuery } from 'react-query';
@@ -63,6 +63,14 @@ const SubjectsAddEdit = ({ subjectToAddEdit, handleClose }) => {
               data?.map(({ firstName, lastName, id }) => ({ value: id, label: `${firstName} ${lastName}` })) || []
             }
           />
+          <SelectInput
+            name="level"
+            errors={errors}
+            control={control}
+            fullWidth
+            label="Razina"
+            options={Object.values(THESIS_LEVELS).map(level => ({ value: level, label: level }))}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -82,6 +90,7 @@ export default SubjectsAddEdit;
 const schema = yup.object().shape({
   name: yup.string().required(),
   study: yup.string().required(),
+  level: yup.string().required(),
   professor: yup.number().required(),
 });
 

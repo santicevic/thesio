@@ -12,4 +12,13 @@ export class TopicsService {
   async getAll(): Promise<Topic[]> {
     return this.topicsRepository.find();
   }
+  create(topicToCreate: Partial<Topic>): Promise<Topic> {
+    return this.topicsRepository.save(topicToCreate);
+  }
+  update(topicToUpdate: Partial<Topic>): Promise<any> {
+    return this.topicsRepository.update(topicToUpdate.id, {
+      title: topicToUpdate.title,
+      description: topicToUpdate.description,
+    });
+  }
 }

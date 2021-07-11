@@ -10,18 +10,26 @@ import {
   ListItemText,
   makeStyles,
   IconButton,
+  Divider,
+  Box,
+  Avatar,
 } from '@material-ui/core';
+import { useQuery } from 'react-query';
 import { ExitToApp as ExitToAppIcon } from '@material-ui/icons';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import authApi from '../api/auth';
+import { queryClient } from '..';
+import usersApi from '../api/users';
 
 const SidebarLayout = ({ children, title, items }) => {
+  const { data } = useQuery('me', usersApi.me);
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
 
   const handleLogout = async () => {
     await authApi.logout();
+    await queryClient.removeQueries();
     history.push('/login');
   };
 
@@ -46,6 +54,21 @@ const SidebarLayout = ({ children, title, items }) => {
       >
         <Toolbar />
         <div className={classes.drawerContainer}>
+          {data && (
+            <Box display="flex" p={2} alignItems="center" flexDirection="column">
+              <Avatar />
+              <Typography variant="h6">
+                {data.firstName} {data.lastName}
+              </Typography>
+              <Typography variant="body1" color="textSecondary">
+                {data.email}
+              </Typography>
+              <Typography variant="body1" color="textSecondary">
+                {data.study}
+              </Typography>
+            </Box>
+          )}
+          <Divider />
           <List>
             {items.map(({ text, Icon, href }) => (
               <Link key={text} to={href} className={classes.link}>

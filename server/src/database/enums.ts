@@ -1,4 +1,4 @@
-export enum ThesisLevel {
+export enum Level {
   BACHELORES = 'BACHELORES',
   MASTERS = 'MASTERS',
 }

@@ -29,6 +29,7 @@ const SubjectsList = ({ handleSubjectEdit }) => {
             <TableCell>Ime</TableCell>
             <TableCell>Smjer</TableCell>
             <TableCell>Profesor</TableCell>
+            <TableCell>Razina</TableCell>
             <TableCell />
           </TableRow>
         </TableHead>
@@ -38,6 +39,7 @@ const SubjectsList = ({ handleSubjectEdit }) => {
               <TableCell>{subject.name}</TableCell>
               <TableCell>{subject.study}</TableCell>
               <TableCell>{`${subject.professor.firstName} ${subject.professor.lastName}`}</TableCell>
+              <TableCell>{subject.level}</TableCell>
               <TableCell>
                 <IconButton className={classes.iconButton} onClick={() => handleSubjectEdit(subject)}>
                   <EditIcon />

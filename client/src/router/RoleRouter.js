@@ -4,6 +4,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Users from '../screens/Users';
 import Subjects from '../screens/Subjects';
 import AdminDashboard from '../screens/AdminDashboard';
+import ProfessorDashboard from '../screens/ProfessorDashboard';
 import SidebarLayout from '../layouts/SidebarLayout';
 import { ROLES, ROUTES } from '../constants';
 
@@ -26,7 +27,9 @@ const RoleRouter = () => {
         </SidebarLayout>
       </ProtectedRoute>
       <ProtectedRoute path={ROUTES.professor.base.href} roles={[ROLES.PROFESSOR]}>
-        <h1>Professor dashboard</h1>
+        <SidebarLayout title="Nastavnik" items={Object.values(ROUTES.professor)}>
+          <ProfessorDashboard />
+        </SidebarLayout>
       </ProtectedRoute>
       <ProtectedRoute exact path={ROUTES.student.base.href} roles={[ROLES.STUDENT]}>
         <h1>Student dashboard</h1>

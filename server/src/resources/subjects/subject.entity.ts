@@ -1,4 +1,4 @@
-import { FieldOfStudies } from 'src/database/enums';
+import { FieldOfStudies, Level } from 'src/database/enums';
 import {
   Entity,
   Column,
@@ -22,6 +22,12 @@ export class Subject {
     enum: FieldOfStudies,
   })
   study: FieldOfStudies;
+
+  @Column({
+    type: 'enum',
+    enum: Level,
+  })
+  level: Level;
 
   @ManyToOne(() => User, (user) => user.taughtClasses, { nullable: false })
   professor: User;

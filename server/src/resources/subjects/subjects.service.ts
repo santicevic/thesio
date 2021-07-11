@@ -21,4 +21,10 @@ export class SubjectsService {
   count(): Promise<number> {
     return this.subjectsRepository.count();
   }
+  getByProfessorId(professorId: string): Promise<Subject[]> {
+    return this.subjectsRepository.find({
+      where: { professor: professorId },
+      relations: ['topics'],
+    });
+  }
 }

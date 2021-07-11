@@ -1,9 +1,16 @@
-import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { UserRole } from 'src/database/enums';
 import { Roles } from 'src/decorators/roles';
 import { JwtAuthGuard } from 'src/guards/JwtAuthGuard';
 import { RolesGuard } from 'src/guards/RoleGuard';
-import { User } from '../users/user.entity';
 import { Subject } from '../subjects/subject.entity';
 import { SubjectsService } from './subjects.service';
 
@@ -12,6 +19,12 @@ import { SubjectsService } from './subjects.service';
 export class SubjectsController {
   constructor(private readonly subjectsService: SubjectsService) {}
 
+  @Get('professor/:professorId')
+  @Roles(UserRole.ADMIN, UserRole.PROFESSOR)
+  @UseGuards(RolesGuard)
+  async getByProfessor(@Param() params): Promise<Subject[]> {
+    return this.subjectsService.getByProfessorId(params.professorId);
+  }
   @Get('count')
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
