@@ -10,7 +10,7 @@ const Users = () => {
     <>
       <Box display="flex" justifyContent="flex-end" paddingY={2}>
         <Button variant="contained" color="primary" onClick={() => setSubjectToAddEdit({})}>
-          Dodaj predmet
+          Dodaj kolegij
         </Button>
       </Box>
       <SubjectsList handleSubjectEdit={setSubjectToAddEdit} />

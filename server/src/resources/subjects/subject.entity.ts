@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   OneToMany,
+  ManyToMany,
 } from 'typeorm';
 import { Topic } from '../topics/topic.entity';
 import { User } from '../users/user.entity';
@@ -34,4 +35,7 @@ export class Subject {
 
   @OneToMany(() => Topic, (topic) => topic.subject)
   topics: Topic[];
+
+  @ManyToMany(() => User, (user) => user.enrolledSubjects)
+  students: User[];
 }

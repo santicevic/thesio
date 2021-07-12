@@ -55,4 +55,11 @@ export class UsersService {
       ],
     });
   }
+  getStudents(): Promise<User[]> {
+    return this.usersRepository.find({
+      where: {
+        role: UserRole.STUDENT,
+      },
+    });
+  }
 }

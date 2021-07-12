@@ -10,7 +10,7 @@ export const ROUTES = {
   admin: {
     base: { href: '/admin', Icon: HomeIcon, text: 'Početna' },
     users: { href: '/admin/users', Icon: PeopleIcon, text: 'Korisnici' },
-    subjects: { href: '/admin/subjects', Icon: LibraryBooksIcon, text: 'Predmeti' },
+    subjects: { href: '/admin/subjects', Icon: LibraryBooksIcon, text: 'Kolegiji' },
   },
 };
 

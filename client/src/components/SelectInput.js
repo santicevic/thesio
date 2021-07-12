@@ -13,8 +13,8 @@ const SelectInput = ({ name, control, label, defaultValue = '', options = [], er
         control={control}
         render={({ field }) => (
           <Select className={classes.select} error={!!errors[name]} {...rest} {...field} value={field.value || ''}>
-            {options.map(option => (
-              <MenuItem key={option.value} value={option.value}>
+            {options.map((option, index) => (
+              <MenuItem key={index} value={option.value}>
                 {option.label}
               </MenuItem>
             ))}

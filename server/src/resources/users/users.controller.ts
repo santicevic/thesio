@@ -24,6 +24,13 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly configsService: ConfigsService,
   ) {}
+
+  @Get('students')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(RolesGuard)
+  getStudents(): Promise<User[]> {
+    return this.usersService.getStudents();
+  }
   @Get('student')
   @Roles(UserRole.STUDENT)
   @UseGuards(RolesGuard)

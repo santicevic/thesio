@@ -52,7 +52,7 @@ export class User {
   @OneToMany(() => Application, (application) => application.student)
   applications: Application[];
 
-  @ManyToMany(() => Subject)
+  @ManyToMany(() => Subject, (subject) => subject.students)
   @JoinTable()
   enrolledSubjects: Subject[];
 }

@@ -31,7 +31,7 @@ const Statistics = () => {
         <Paper className={classes.paper} elevation={3}>
           <Box display="flex" justifyContent="space-between">
             <div>
-              <Typography variant="h5">Predmeti</Typography>
+              <Typography variant="h5">Kolegiji</Typography>
               <Typography variant="h6">{subjectsResult?.data || <CircularProgress size={24} />}</Typography>
             </div>
             <LibraryBooksIcon />

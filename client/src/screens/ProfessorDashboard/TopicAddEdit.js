@@ -36,7 +36,9 @@ const TopicAddEdit = ({ topicToAddEdit, handleClose }) => {
 
   return (
     <Dialog open={!!topicToAddEdit} onClose={handleClose}>
-      <DialogTitle>Dodaj temu za kolegij {topicToAddEdit?.subjectName}</DialogTitle>
+      <DialogTitle>
+        {isEdit ? 'Uredi' : 'Dodaj'} temu za kolegij {topicToAddEdit?.subjectName}
+      </DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent className={classes.content}>
           <TextInput name="title" errors={errors} control={control} fullWidth label="Naslov" />

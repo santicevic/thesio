@@ -38,7 +38,7 @@ const UserAddEdit = ({ userToAddEdit, handleClose }) => {
 
   return (
     <Dialog open={!!userToAddEdit} onClose={handleClose}>
-      <DialogTitle>Dodaj korisnika</DialogTitle>
+      <DialogTitle>{isEdit ? 'Uredi' : 'Dodaj'} korisnika</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent className={classes.content}>
           <TextInput name="firstName" errors={errors} control={control} fullWidth label="Ime" />
