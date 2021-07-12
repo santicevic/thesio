@@ -23,6 +23,7 @@ export class UsersService {
     return this.usersRepository.findOne({
       where: { email },
       select: [
+        'id',
         'firstName',
         'lastName',
         'email',
@@ -41,5 +42,17 @@ export class UsersService {
   }
   count(): Promise<number> {
     return this.usersRepository.count();
+  }
+  getStudentTopics(studentEmail: string): Promise<User> {
+    return this.usersRepository.findOne({
+      where: { email: studentEmail },
+      relations: [
+        'applications',
+        'enrolledSubjects',
+        'enrolledSubjects.topics',
+        'enrolledSubjects.professor',
+        'enrolledSubjects.topics.applications',
+      ],
+    });
   }
 }

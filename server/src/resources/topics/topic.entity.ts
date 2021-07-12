@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { Application } from '../applications/application.entity';
 import { Subject } from '../subjects/subject.entity';
 
 @Entity()
@@ -14,4 +21,7 @@ export class Topic {
 
   @ManyToOne(() => Subject, (subject) => subject.topics, { nullable: false })
   subject: Subject;
+
+  @OneToMany(() => Application, (application) => application.topic)
+  applications: Application[];
 }

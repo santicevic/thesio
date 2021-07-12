@@ -5,11 +5,14 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  Unique,
 } from 'typeorm';
 import { Topic } from '../topics/topic.entity';
 import { User } from '../users/user.entity';
 
 @Entity()
+@Unique(['student', 'year'])
+@Unique(['topic', 'year'])
 export class Application {
   @PrimaryGeneratedColumn()
   id: number;
@@ -17,8 +20,11 @@ export class Application {
   @Column('timestamp')
   applicationDate: Date;
 
-  @Column('timestamp')
+  @Column('timestamp', { nullable: true })
   defenseDate: Date;
+
+  @Column('text')
+  year: string;
 
   @Column({
     type: 'enum',
@@ -26,7 +32,7 @@ export class Application {
   })
   status: ApplicationStatus;
 
-  @ManyToOne(() => Topic, { nullable: false })
+  @ManyToOne(() => Topic)
   @JoinColumn({ name: 'topicId', referencedColumnName: 'id' })
   topic: Topic;
 
@@ -38,11 +44,11 @@ export class Application {
   @JoinColumn({ name: 'mentorId', referencedColumnName: 'id' })
   mentor: User;
 
-  @ManyToOne(() => User, { nullable: false })
+  @ManyToOne(() => User)
   @JoinColumn({ name: 'presidentId', referencedColumnName: 'id' })
   president: User;
 
-  @ManyToOne(() => User, { nullable: false })
+  @ManyToOne(() => User)
   @JoinColumn({ name: 'thirdId', referencedColumnName: 'id' })
   third: User;
 

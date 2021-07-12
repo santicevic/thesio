@@ -22,13 +22,13 @@ export class SubjectsController {
   @Get('professor/:professorId')
   @Roles(UserRole.ADMIN, UserRole.PROFESSOR)
   @UseGuards(RolesGuard)
-  async getByProfessor(@Param() params): Promise<Subject[]> {
+  getByProfessor(@Param() params): Promise<Subject[]> {
     return this.subjectsService.getByProfessorId(params.professorId);
   }
   @Get('count')
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
-  async count(): Promise<number> {
+  count(): Promise<number> {
     return this.subjectsService.count();
   }
   @Get()
@@ -38,13 +38,13 @@ export class SubjectsController {
   @Post()
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
-  async create(@Body() body): Promise<Subject> {
+  create(@Body() body): Promise<Subject> {
     return this.subjectsService.create(body);
   }
   @Patch()
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
-  async update(@Body() body): Promise<Subject> {
+  update(@Body() body): Promise<Subject> {
     return this.subjectsService.update(body);
   }
 }

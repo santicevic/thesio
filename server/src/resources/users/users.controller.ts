@@ -13,17 +13,49 @@ import { Roles } from 'src/decorators/roles';
 import { JwtAuthGuard } from 'src/guards/JwtAuthGuard';
 import { RolesGuard } from 'src/guards/RoleGuard';
 import { generateHash } from 'src/utils/crypto';
+import { ConfigsService } from '../configs/configs.service';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly configsService: ConfigsService,
+  ) {}
+  @Get('student')
+  @Roles(UserRole.STUDENT)
+  @UseGuards(RolesGuard)
+  async getStudentTopics(@Request() req): Promise<any> {
+    const studentTopics = await this.usersService.getStudentTopics(
+      req.user.email,
+    );
+    const yearConfig = await this.configsService.getByKey('year');
+
+    return {
+      ...studentTopics,
+      hasApplied: studentTopics.applications.some(
+        ({ year }) => year === yearConfig.value,
+      ),
+      enrolledSubjects: studentTopics.enrolledSubjects.map((subject) => ({
+        ...subject,
+        topics: subject.topics.map((topic) => ({
+          title: topic.title,
+          description: topic.description,
+          id: topic.id,
+          isAvailable: !topic.applications.some(
+            (application) => application.year === yearConfig.value,
+          ),
+        })),
+      })),
+    };
+  }
+
   @Get('count')
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
-  async count(): Promise<number> {
+  count(): Promise<number> {
     return this.usersService.count();
   }
   @Get()
@@ -39,7 +71,7 @@ export class UsersController {
     return this.usersService.getProfessors();
   }
   @Get('me')
-  async me(@Request() req): Promise<User> {
+  me(@Request() req): Promise<User> {
     return this.usersService.getByEmail(req.user.email);
   }
   @Post()
@@ -64,7 +96,7 @@ export class UsersController {
   @Patch()
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
-  async update(@Body() body): Promise<User> {
+  update(@Body() body): Promise<User> {
     if (body.role === UserRole.STUDENT && !body.studentLevel) {
       throw new BadRequestException('Student must have studentLevel');
     }

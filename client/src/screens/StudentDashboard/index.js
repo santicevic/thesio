@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useQuery } from 'react-query';
 import {
   Accordion,
   AccordionSummary,
@@ -9,21 +8,18 @@ import {
   Box,
   Divider,
   Button,
-  IconButton,
 } from '@material-ui/core';
-import { Edit as EditIcon, ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import { useQuery } from 'react-query';
 import usersApi from '../../api/users';
-import subjectsApi from '../../api/subjects';
-import TopicAddEdit from './TopicAddEdit';
+import applicationsApi from '../../api/applications';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
-const ProfessorSubjects = () => {
+const StudentDashboard = () => {
+  const { data } = useQuery('studentTopics', usersApi.getStudentTopics);
+  const [expanded, setExpanded] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState(null);
   const classes = useStyles();
-  const [expanded, setExpanded] = useState(null);
-  const [topicToAddEdit, setTopicToAddEdit] = useState(null);
-  const { data: userData } = useQuery('me', usersApi.me);
-  const { data: subjectsData } = useQuery('professorSubjects', () => subjectsApi.getByProfessorId(userData.id), {
-    enabled: !!userData,
-  });
 
   const handleChange = panel => (_, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -31,12 +27,12 @@ const ProfessorSubjects = () => {
 
   return (
     <>
-      {subjectsData?.map(({ id, name, study, topics, level }) => (
+      {data?.enrolledSubjects.map(({ id, name, professor, study, topics }) => (
         <Accordion key={id} expanded={expanded === `${name}-${study}`} onChange={handleChange(`${name}-${study}`)}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.heading}>{name}</Typography>
             <Typography className={classes.secondaryHeading}>
-              {study} - {level}
+              {professor.firstName} {professor.lastName}
             </Typography>
           </AccordionSummary>
           <AccordionDetails className={classes.accordionDetails}>
@@ -44,11 +40,17 @@ const ProfessorSubjects = () => {
             {topics.map(topic => (
               <Box key={topic.id}>
                 <Box p={1}>
-                  <Box display="flex" justifyContent="space-between" alignItems="center">
+                  <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
                     <Typography variant="h6">{topic.title}</Typography>
-                    <IconButton onClick={() => setTopicToAddEdit({ subjectId: id, subjectName: name, ...topic })}>
-                      <EditIcon />
-                    </IconButton>
+                    <Button
+                      color="primary"
+                      disabled={data.hasApplied || !topic.isAvailable}
+                      variant="contained"
+                      size="small"
+                      onClick={() => setSelectedTopic(topic)}
+                    >
+                      Prijavi
+                    </Button>
                   </Box>
                   <Typography variant="body2" color="textSecondary">
                     {topic.description}
@@ -57,29 +59,31 @@ const ProfessorSubjects = () => {
                 <Divider />
               </Box>
             ))}
-            <Box display="flex" justifyContent="flex-end" mt={2}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setTopicToAddEdit({ subjectId: id, subjectName: name })}
-              >
-                Dodaj temu
-              </Button>
-            </Box>
           </AccordionDetails>
         </Accordion>
       ))}
-      <TopicAddEdit topicToAddEdit={topicToAddEdit} handleClose={() => setTopicToAddEdit(null)} />
+      <ConfirmDialog
+        title="Prijavi temu"
+        description={`Jeste li sigurni da želite prijaviti ${selectedTopic?.title}`}
+        acceptText="Prijavi"
+        declineText="Odustanu"
+        open={!!selectedTopic}
+        handleAccept={() => {
+          applicationsApi.apply({ topic: selectedTopic.id, mentor: selectedTopic.professor.id });
+          setSelectedTopic(null);
+        }}
+        handleClose={() => setSelectedTopic(null)}
+      />
     </>
   );
 };
 
-export default ProfessorSubjects;
+export default StudentDashboard;
 
 const useStyles = makeStyles(theme => ({
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    flexBasis: '33.33%',
+    flexBasis: '40%',
     flexShrink: 0,
   },
   secondaryHeading: {

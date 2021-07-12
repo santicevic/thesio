@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Subject } from '../subjects/subject.entity';
 import { FieldOfStudies, Level, UserRole } from 'src/database/enums';
+import { Application } from '../applications/application.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -47,6 +48,9 @@ export class User {
 
   @OneToMany(() => Subject, (subject) => subject.professor)
   taughtClasses: Subject[];
+
+  @OneToMany(() => Application, (application) => application.student)
+  applications: Application[];
 
   @ManyToMany(() => Subject)
   @JoinTable()

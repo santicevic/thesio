@@ -9,7 +9,17 @@ export class ApplicationsService {
     private applicationsRepository: Repository<Application>,
   ) {}
 
-  async getAll(): Promise<Application[]> {
+  getAll(): Promise<Application[]> {
     return this.applicationsRepository.find();
+  }
+  getByStudentEmail(studentEmail: string): Promise<Application[]> {
+    return this.applicationsRepository
+      .createQueryBuilder('application')
+      .innerJoinAndSelect('application.student', 'student')
+      .where('student.email = :email', { email: studentEmail })
+      .getMany();
+  }
+  create(application: Partial<Application>): Promise<Application> {
+    return this.applicationsRepository.save(application);
   }
 }

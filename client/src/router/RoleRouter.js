@@ -5,7 +5,9 @@ import Users from '../screens/Users';
 import Subjects from '../screens/Subjects';
 import AdminDashboard from '../screens/AdminDashboard';
 import ProfessorDashboard from '../screens/ProfessorDashboard';
+import StudentDashboard from '../screens/StudentDashboard';
 import SidebarLayout from '../layouts/SidebarLayout';
+import AppBarLayout from '../layouts/AppBarLayout';
 import { ROLES, ROUTES } from '../constants';
 
 const RoleRouter = () => {
@@ -32,7 +34,9 @@ const RoleRouter = () => {
         </SidebarLayout>
       </ProtectedRoute>
       <ProtectedRoute exact path={ROUTES.student.base.href} roles={[ROLES.STUDENT]}>
-        <h1>Student dashboard</h1>
+        <AppBarLayout title="Student">
+          <StudentDashboard />
+        </AppBarLayout>
       </ProtectedRoute>
     </Switch>
   );
