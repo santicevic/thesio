@@ -6,6 +6,7 @@ import Subjects from '../screens/Subjects';
 import AdminDashboard from '../screens/AdminDashboard';
 import ProfessorDashboard from '../screens/ProfessorDashboard';
 import StudentDashboard from '../screens/StudentDashboard';
+import ProfessorApplications from '../screens/ProfessorApplications';
 import SidebarLayout from '../layouts/SidebarLayout';
 import AppBarLayout from '../layouts/AppBarLayout';
 import { ROLES, ROUTES } from '../constants';
@@ -30,7 +31,14 @@ const RoleRouter = () => {
       </ProtectedRoute>
       <ProtectedRoute path={ROUTES.professor.base.href} roles={[ROLES.PROFESSOR]}>
         <SidebarLayout title="Nastavnik" items={Object.values(ROUTES.professor)}>
-          <ProfessorDashboard />
+          <Switch>
+            <Route path={ROUTES.professor.applications.href}>
+              <ProfessorApplications />
+            </Route>
+            <Route path={ROUTES.professor.base.href}>
+              <ProfessorDashboard />
+            </Route>
+          </Switch>
         </SidebarLayout>
       </ProtectedRoute>
       <ProtectedRoute exact path={ROUTES.student.base.href} roles={[ROLES.STUDENT]}>

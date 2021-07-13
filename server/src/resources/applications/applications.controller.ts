@@ -6,6 +6,7 @@ import {
   Body,
   Request,
   ConflictException,
+  BadRequestException,
 } from '@nestjs/common';
 import { ApplicationStatus, UserRole } from 'src/database/enums';
 import { Roles } from 'src/decorators/roles';
@@ -28,6 +29,36 @@ export class ApplicationsController {
   getAll() {
     return this.applicationsService.getAll();
   }
+  @Get('get-application')
+  @Roles(UserRole.STUDENT)
+  @UseGuards(RolesGuard)
+  async getApplication(@Request() req): Promise<Application | undefined> {
+    const applications = await this.applicationsService.getByStudentEmail(
+      req.user.email,
+    );
+    const yearConfig = await this.configsService.getByKey('year');
+    return Promise.resolve(
+      applications.find(({ year }) => year === yearConfig.value),
+    );
+  }
+  @Post('apply-defense')
+  @Roles(UserRole.STUDENT)
+  @UseGuards(RolesGuard)
+  async applyDefense(@Request() req): Promise<Application> {
+    const applications = await this.applicationsService.getByStudentEmail(
+      req.user.email,
+    );
+    const yearConfig = await this.configsService.getByKey('year');
+    const application = applications.find(
+      ({ year }) => year === yearConfig.value,
+    );
+    if (!application) {
+      throw new BadRequestException('Application does not exist');
+    }
+    application.status = ApplicationStatus.PENDING_MENTOR;
+
+    return this.applicationsService.save(application);
+  }
   @Post('apply')
   @Roles(UserRole.STUDENT)
   @UseGuards(RolesGuard)
@@ -40,7 +71,7 @@ export class ApplicationsController {
       throw new ConflictException('User already has open application');
     }
 
-    return this.applicationsService.create({
+    return this.applicationsService.save({
       applicationDate: new Date(),
       status: ApplicationStatus.DRAFT,
       topic: body.topic,

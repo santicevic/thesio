@@ -1,11 +1,17 @@
-import { Home as HomeIcon, People as PeopleIcon, LibraryBooks as LibraryBooksIcon } from '@material-ui/icons';
+import {
+  Home as HomeIcon,
+  People as PeopleIcon,
+  LibraryBooks as LibraryBooksIcon,
+  Description as DescriptionIcon,
+} from '@material-ui/icons';
 
 export const ROUTES = {
   student: {
     base: { href: '/', Icon: null, text: '' },
   },
   professor: {
-    base: { href: '/proffesor', Icon: HomeIcon, text: 'Početna' },
+    base: { href: '/professor', Icon: HomeIcon, text: 'Početna' },
+    applications: { href: '/professor/applications', Icon: DescriptionIcon, text: 'Prijave' },
   },
   admin: {
     base: { href: '/admin', Icon: HomeIcon, text: 'Početna' },
@@ -31,4 +37,13 @@ export const STUDIES = {
 export const LEVELS = {
   BACHELORES: 'BACHELORES',
   MASTERS: 'MASTERS',
+};
+
+export const APPLICATION_STATUS = {
+  DRAFT: 'DRAFT',
+  PENDING_MENTOR: 'PENDING_MENTOR',
+  PENDING_ADMIN: 'PENDING_ADMIN',
+  SCHEDULED: 'SCHEDULED',
+  DONE: 'DONE',
+  FAILED: 'FAILED',
 };

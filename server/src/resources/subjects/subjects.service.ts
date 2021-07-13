@@ -14,11 +14,8 @@ export class SubjectsService {
       relations: ['professor', 'students'],
     });
   }
-  create(subjectToCreate: Partial<Subject>): Promise<Subject> {
+  save(subjectToCreate: Partial<Subject>): Promise<Subject> {
     return this.subjectsRepository.save(subjectToCreate);
-  }
-  update(subjectToUpdate: Partial<Subject>): Promise<any> {
-    return this.subjectsRepository.save(subjectToUpdate);
   }
   count(): Promise<number> {
     return this.subjectsRepository.count();

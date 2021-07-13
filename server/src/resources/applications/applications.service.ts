@@ -17,9 +17,11 @@ export class ApplicationsService {
       .createQueryBuilder('application')
       .innerJoinAndSelect('application.student', 'student')
       .where('student.email = :email', { email: studentEmail })
+      .leftJoinAndSelect('application.topic', 'topic')
+      .leftJoinAndSelect('application.mentor', 'mentor')
       .getMany();
   }
-  create(application: Partial<Application>): Promise<Application> {
+  save(application: Partial<Application>): Promise<Application> {
     return this.applicationsRepository.save(application);
   }
 }

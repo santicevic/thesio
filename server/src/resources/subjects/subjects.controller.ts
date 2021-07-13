@@ -39,12 +39,12 @@ export class SubjectsController {
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   create(@Body() body): Promise<Subject> {
-    return this.subjectsService.create(body);
+    return this.subjectsService.save(body);
   }
   @Patch()
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   update(@Body() body): Promise<Subject> {
-    return this.subjectsService.update(body);
+    return this.subjectsService.save(body);
   }
 }
