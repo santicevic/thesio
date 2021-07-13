@@ -26,4 +26,18 @@ export class ApplicationsService {
   save(application: Partial<Application>): Promise<Application> {
     return this.applicationsRepository.save(application);
   }
+
+  getByMentor(mentorId: number): Promise<Application[]> {
+    return this.applicationsRepository.find({
+      where: { mentor: mentorId },
+      relations: ['student', 'topic'],
+      order: {
+        applicationDate: 'DESC',
+      },
+    });
+  }
+
+  getById(id: number): Promise<Application> {
+    return this.applicationsRepository.findOne(id, { relations: ['mentor'] });
+  }
 }

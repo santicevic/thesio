@@ -7,6 +7,7 @@ import {
   Request,
   ConflictException,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ApplicationStatus, UserRole } from 'src/database/enums';
 import { Roles } from 'src/decorators/roles';
@@ -59,9 +60,19 @@ export class ApplicationsController {
     if (!application) {
       throw new BadRequestException('Application does not exist');
     }
+    if (application.status !== ApplicationStatus.DRAFT) {
+      throw new ConflictException('Application already submited');
+    }
     application.status = ApplicationStatus.PENDING_MENTOR;
 
     return this.applicationsService.save(application);
+  }
+
+  @Get('mentor-applications')
+  @Roles(UserRole.PROFESSOR)
+  @UseGuards(RolesGuard)
+  getMentorApplications(@Request() req) {
+    return this.applicationsService.getByMentor(req.user.id);
   }
 
   @Post('apply')
@@ -84,5 +95,25 @@ export class ApplicationsController {
       mentor: body.mentor,
       year: yearConfig.value,
     });
+  }
+
+  @Post('mentor-accept')
+  @Roles(UserRole.PROFESSOR)
+  @UseGuards(RolesGuard)
+  async mentorAccept(@Body() body, @Request() req): Promise<Application> {
+    const application = await this.applicationsService.getById(
+      body.applicationId,
+    );
+    if (
+      application.mentor.id !== req.user.id ||
+      application.status !== ApplicationStatus.PENDING_MENTOR
+    ) {
+      throw new UnauthorizedException('User is not authorized!');
+    }
+    application.status = body.accepted
+      ? ApplicationStatus.PENDING_ADMIN
+      : ApplicationStatus.DRAFT;
+
+    return this.applicationsService.save(application);
   }
 }
