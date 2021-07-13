@@ -1,4 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
+import { ApplicationStatus } from 'src/database/enums';
 import { Repository } from 'typeorm';
 import { Application } from './application.entity';
 
@@ -39,5 +40,12 @@ export class ApplicationsService {
 
   getById(id: number): Promise<Application> {
     return this.applicationsRepository.findOne(id, { relations: ['mentor'] });
+  }
+
+  getPendingAdmin(year: string): Promise<Application[]> {
+    return this.applicationsRepository.find({
+      where: { status: ApplicationStatus.PENDING_ADMIN, year },
+      relations: ['student', 'topic', 'mentor'],
+    });
   }
 }

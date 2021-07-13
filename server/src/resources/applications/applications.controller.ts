@@ -68,11 +68,19 @@ export class ApplicationsController {
     return this.applicationsService.save(application);
   }
 
-  @Get('mentor-applications')
+  @Get('mentor')
   @Roles(UserRole.PROFESSOR)
   @UseGuards(RolesGuard)
   getMentorApplications(@Request() req) {
     return this.applicationsService.getByMentor(req.user.id);
+  }
+
+  @Get('admin')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(RolesGuard)
+  async getAdminApplications() {
+    const yearConfig = await this.configsService.getByKey('year');
+    return this.applicationsService.getPendingAdmin(yearConfig.value);
   }
 
   @Post('apply')
@@ -113,6 +121,39 @@ export class ApplicationsController {
     application.status = body.accepted
       ? ApplicationStatus.PENDING_ADMIN
       : ApplicationStatus.DRAFT;
+
+    return this.applicationsService.save(application);
+  }
+
+  @Post('schedule')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(RolesGuard)
+  async shedule(@Body() body): Promise<Application> {
+    const application = await this.applicationsService.getById(
+      body.applicationId,
+    );
+
+    const comitee = [
+      application.mentor.id,
+      body.president,
+      body.third,
+      body.fourth,
+    ];
+    const hasDuplicates = new Set(comitee).size !== comitee.length;
+
+    if (!body.president || !body.third || !body.defenseDate || hasDuplicates) {
+      throw new BadRequestException('Invalid request');
+    }
+
+    if (application.status !== ApplicationStatus.PENDING_ADMIN) {
+      throw new ConflictException('Application can not be scheduled');
+    }
+
+    application.status = ApplicationStatus.SCHEDULED;
+    application.president = body.president;
+    application.third = body.third;
+    application.fourth = body.fourth;
+    application.defenseDate = body.defenseDate;
 
     return this.applicationsService.save(application);
   }
