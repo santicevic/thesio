@@ -23,12 +23,14 @@ export class ApplicationsController {
     private readonly applicationsService: ApplicationsService,
     private readonly configsService: ConfigsService,
   ) {}
+
   @Get()
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   getAll() {
     return this.applicationsService.getAll();
   }
+
   @Get('get-application')
   @Roles(UserRole.STUDENT)
   @UseGuards(RolesGuard)
@@ -37,10 +39,12 @@ export class ApplicationsController {
       req.user.email,
     );
     const yearConfig = await this.configsService.getByKey('year');
+
     return Promise.resolve(
       applications.find(({ year }) => year === yearConfig.value),
     );
   }
+
   @Post('apply-defense')
   @Roles(UserRole.STUDENT)
   @UseGuards(RolesGuard)
@@ -59,6 +63,7 @@ export class ApplicationsController {
 
     return this.applicationsService.save(application);
   }
+
   @Post('apply')
   @Roles(UserRole.STUDENT)
   @UseGuards(RolesGuard)

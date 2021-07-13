@@ -12,6 +12,7 @@ export class ApplicationsService {
   getAll(): Promise<Application[]> {
     return this.applicationsRepository.find();
   }
+
   getByStudentEmail(studentEmail: string): Promise<Application[]> {
     return this.applicationsRepository
       .createQueryBuilder('application')
@@ -21,6 +22,7 @@ export class ApplicationsService {
       .leftJoinAndSelect('application.mentor', 'mentor')
       .getMany();
   }
+
   save(application: Partial<Application>): Promise<Application> {
     return this.applicationsRepository.save(application);
   }

@@ -18,7 +18,8 @@ export class AuthService {
     }
     return { ...user, password: undefined };
   }
-  async login(user: User) {
+
+  login(user: User) {
     const payload = {
       email: user.email,
       role: user.role,

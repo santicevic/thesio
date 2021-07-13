@@ -25,22 +25,26 @@ export class SubjectsController {
   getByProfessor(@Param() params): Promise<Subject[]> {
     return this.subjectsService.getByProfessorId(params.professorId);
   }
+
   @Get('count')
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   count(): Promise<number> {
     return this.subjectsService.count();
   }
+
   @Get()
   getAll() {
     return this.subjectsService.getAll();
   }
+
   @Post()
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   create(@Body() body): Promise<Subject> {
     return this.subjectsService.save(body);
   }
+
   @Patch()
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)

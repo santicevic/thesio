@@ -13,12 +13,15 @@ export class UsersService {
   getAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
+
   getProfessors(): Promise<User[]> {
     return this.usersRepository.find({ where: { role: UserRole.PROFESSOR } });
   }
+
   getByEmail(email: string): Promise<User> {
     return this.usersRepository.findOne({ where: { email } });
   }
+
   getByEmailWithPassword(email: string): Promise<User> {
     return this.usersRepository.findOne({
       where: { email },
@@ -34,15 +37,19 @@ export class UsersService {
       ],
     });
   }
+
   create(userToCreate: Partial<User>): Promise<User> {
     return this.usersRepository.save(userToCreate);
   }
+
   update(userToUpdate: Partial<User>): Promise<any> {
     return this.usersRepository.update(userToUpdate.id, userToUpdate);
   }
+
   count(): Promise<number> {
     return this.usersRepository.count();
   }
+
   getStudentTopics(studentEmail: string): Promise<User> {
     return this.usersRepository.findOne({
       where: { email: studentEmail },
@@ -55,6 +62,7 @@ export class UsersService {
       ],
     });
   }
+
   getStudents(): Promise<User[]> {
     return this.usersRepository.find({
       where: {

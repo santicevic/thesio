@@ -31,6 +31,7 @@ export class UsersController {
   getStudents(): Promise<User[]> {
     return this.usersService.getStudents();
   }
+
   @Get('student')
   @Roles(UserRole.STUDENT)
   @UseGuards(RolesGuard)
@@ -65,22 +66,26 @@ export class UsersController {
   count(): Promise<number> {
     return this.usersService.count();
   }
+
   @Get()
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   getAll() {
     return this.usersService.getAll();
   }
+
   @Get('professors')
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   getProfessors() {
     return this.usersService.getProfessors();
   }
+
   @Get('me')
   me(@Request() req): Promise<User> {
     return this.usersService.getByEmail(req.user.email);
   }
+
   @Post()
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
@@ -100,6 +105,7 @@ export class UsersController {
       password: generateHash(body.password),
     });
   }
+
   @Patch()
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)

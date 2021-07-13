@@ -9,21 +9,28 @@ export class SubjectsService {
     private subjectsRepository: Repository<Subject>,
   ) {}
 
-  async getAll(): Promise<Subject[]> {
+  getAll(): Promise<Subject[]> {
     return this.subjectsRepository.find({
       relations: ['professor', 'students'],
     });
   }
+
   save(subjectToCreate: Partial<Subject>): Promise<Subject> {
     return this.subjectsRepository.save(subjectToCreate);
   }
+
   count(): Promise<number> {
     return this.subjectsRepository.count();
   }
+
   getByProfessorId(professorId: string): Promise<Subject[]> {
     return this.subjectsRepository.find({
       where: { professor: professorId },
       relations: ['topics'],
     });
+  }
+
+  getById(id: number): Promise<Subject> {
+    return this.subjectsRepository.findOne(id, { relations: ['professor'] });
   }
 }

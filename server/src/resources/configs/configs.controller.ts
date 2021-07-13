@@ -9,6 +9,7 @@ import { ConfigsService } from './configs.service';
 @UseGuards(JwtAuthGuard)
 export class ConfigsController {
   constructor(private readonly configsService: ConfigsService) {}
+
   @Get(':key')
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)

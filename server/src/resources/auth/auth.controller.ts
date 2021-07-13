@@ -27,6 +27,7 @@ export class AuthController {
     });
     res.send(req.user);
   }
+
   @Get('logout')
   @UseGuards(JwtAuthGuard)
   logout(@Response({ passthrough: true }) res) {
