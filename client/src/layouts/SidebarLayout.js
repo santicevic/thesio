@@ -20,6 +20,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import authApi from '../api/auth';
 import { queryClient } from '..';
 import usersApi from '../api/users';
+import { STUDIES_TRANSLATION } from '../constants';
 
 const SidebarLayout = ({ children, title, items }) => {
   const { data } = useQuery('me', usersApi.me);
@@ -64,7 +65,7 @@ const SidebarLayout = ({ children, title, items }) => {
                 {data.email}
               </Typography>
               <Typography variant="body1" color="textSecondary">
-                {data.study}
+                {STUDIES_TRANSLATION[data.study]}
               </Typography>
             </Box>
           )}

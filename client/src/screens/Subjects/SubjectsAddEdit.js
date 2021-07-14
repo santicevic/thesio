@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import TextInput from '../../components/TextInput';
 import SelectInput from '../../components/SelectInput';
-import { STUDIES, LEVELS } from '../../constants';
+import { STUDIES, LEVELS, STUDIES_TRANSLATION, LEVELS_TRANSLATION } from '../../constants';
 import usersApi from '../../api/users';
 import { queryClient } from '../../index';
 import { useQuery } from 'react-query';
@@ -75,7 +75,7 @@ const SubjectsAddEdit = ({ subjectToAddEdit, handleClose }) => {
             control={control}
             fullWidth
             label="Smjer"
-            options={Object.values(STUDIES).map(study => ({ value: study, label: study }))}
+            options={Object.values(STUDIES).map(study => ({ value: study, label: STUDIES_TRANSLATION[study] }))}
           />
           <SelectInput
             name="professor"
@@ -94,7 +94,7 @@ const SubjectsAddEdit = ({ subjectToAddEdit, handleClose }) => {
             control={control}
             fullWidth
             label="Razina"
-            options={Object.values(LEVELS).map(level => ({ value: level, label: level }))}
+            options={Object.values(LEVELS).map(level => ({ value: level, label: LEVELS_TRANSLATION[level] }))}
           />
           <Box display="flex">
             <SelectInput

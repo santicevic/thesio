@@ -4,7 +4,12 @@ import { Paper, Typography, Divider, Chip, makeStyles, Box, Button, Grid } from 
 import { format } from 'date-fns';
 import { Person as PersonIcon, SupervisorAccount as SupervisorAccountIcon } from '@material-ui/icons';
 import applicationsApi from '../../api/applications';
-import { APPLICATION_STATUS } from '../../constants';
+import {
+  APPLICATION_STATUS,
+  APPLICATION_STATUS_TRANSLATION,
+  LEVELS_TRANSLATION,
+  STUDIES_TRANSLATION,
+} from '../../constants';
 import { queryClient } from '../..';
 
 const ApplicationDetails = () => {
@@ -17,7 +22,7 @@ const ApplicationDetails = () => {
     <Paper elevation={3} className={classes.paper}>
       <Typography variant="h5">{data.topic.title}</Typography>
       <Typography variant="h6" color="textSecondary">
-        {data.student.study} - {data.student.studentLevel} ({data.year})
+        {STUDIES_TRANSLATION[data.student.study]} - {LEVELS_TRANSLATION[data.student.studentLevel]} ({data.year})
       </Typography>
       <Chip
         className={classes.chip}
@@ -38,7 +43,7 @@ const ApplicationDetails = () => {
       <Grid container>
         <Grid item md={6} xs={12}>
           <Box marginTop={2} marginBottom={1}>
-            <Typography variant="body1">Status: {data.status}</Typography>
+            <Typography variant="body1">Status: {APPLICATION_STATUS_TRANSLATION[data.status]}</Typography>
             <Typography variant="body1">Prijavljeno: {format(new Date(data.applicationDate), 'MM/dd/yyyy')}</Typography>
             <Typography variant="body1">
               Obrana: {data.defenseDate ? format(new Date(data.defenseDate), 'MM/dd/yyyy') : 'Nije prijavljena'}

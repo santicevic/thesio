@@ -23,5 +23,4 @@ export enum ApplicationStatus {
   PENDING_ADMIN = 'PENDING_ADMIN',
   SCHEDULED = 'SCHEDULED',
   DONE = 'DONE',
-  FAILED = 'FAILED',
 }

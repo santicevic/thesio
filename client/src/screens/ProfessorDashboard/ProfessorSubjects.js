@@ -15,6 +15,7 @@ import { Edit as EditIcon, ExpandMore as ExpandMoreIcon } from '@material-ui/ico
 import usersApi from '../../api/users';
 import subjectsApi from '../../api/subjects';
 import TopicAddEdit from './TopicAddEdit';
+import { LEVELS_TRANSLATION, STUDIES_TRANSLATION } from '../../constants';
 
 const ProfessorSubjects = () => {
   const classes = useStyles();
@@ -36,7 +37,7 @@ const ProfessorSubjects = () => {
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.heading}>{name}</Typography>
             <Typography className={classes.secondaryHeading}>
-              {study} - {level}
+              {STUDIES_TRANSLATION[study]} - {LEVELS_TRANSLATION[level]}
             </Typography>
           </AccordionSummary>
           <AccordionDetails className={classes.accordionDetails}>

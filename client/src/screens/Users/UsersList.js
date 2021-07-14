@@ -14,6 +14,7 @@ import {
 import { Edit as EditIcon } from '@material-ui/icons';
 import { useQuery } from 'react-query';
 import usersApi from '../../api/users';
+import { ROLE_TRANSLATION, STUDIES_TRANSLATION } from '../../constants';
 
 const UsersList = ({ handleUserEdit }) => {
   const classes = useStyles();
@@ -40,8 +41,8 @@ const UsersList = ({ handleUserEdit }) => {
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.firstName}</TableCell>
               <TableCell>{user.lastName}</TableCell>
-              <TableCell>{user.role}</TableCell>
-              <TableCell>{user.study}</TableCell>
+              <TableCell>{ROLE_TRANSLATION[user.role]}</TableCell>
+              <TableCell>{STUDIES_TRANSLATION[user.study]}</TableCell>
               <TableCell>
                 <IconButton className={classes.iconButton} onClick={() => handleUserEdit(user)}>
                   <EditIcon />

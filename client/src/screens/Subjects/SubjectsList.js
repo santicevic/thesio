@@ -14,6 +14,7 @@ import {
 import { Edit as EditIcon } from '@material-ui/icons';
 import { useQuery } from 'react-query';
 import subjectsApi from '../../api/subjects';
+import { LEVELS_TRANSLATION, STUDIES_TRANSLATION } from '../../constants';
 
 const SubjectsList = ({ handleSubjectEdit }) => {
   const classes = useStyles();
@@ -37,9 +38,9 @@ const SubjectsList = ({ handleSubjectEdit }) => {
           {data.map(subject => (
             <TableRow hover key={subject.id}>
               <TableCell>{subject.name}</TableCell>
-              <TableCell>{subject.study}</TableCell>
+              <TableCell>{STUDIES_TRANSLATION[subject.study]}</TableCell>
               <TableCell>{`${subject.professor.firstName} ${subject.professor.lastName}`}</TableCell>
-              <TableCell>{subject.level}</TableCell>
+              <TableCell>{LEVELS_TRANSLATION[subject.level]}</TableCell>
               <TableCell>
                 <IconButton className={classes.iconButton} onClick={() => handleSubjectEdit(subject)}>
                   <EditIcon />

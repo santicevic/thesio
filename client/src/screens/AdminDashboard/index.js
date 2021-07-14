@@ -1,13 +1,15 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import Statistics from './Statistics';
-import AdminApplications from './AdminApplications';
+import DefenseApplyList from './DefenseApplyList';
+import GradeInputList from './GradeInputList';
 
 const AdminDashboard = () => {
   return (
     <Grid container spacing={3}>
       <Statistics />
-      <AdminApplications />
+      <DefenseApplyList />
+      <GradeInputList />
     </Grid>
   );
 };

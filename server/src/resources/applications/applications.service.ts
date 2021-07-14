@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ApplicationStatus } from 'src/database/enums';
-import { Repository } from 'typeorm';
+import { LessThan, Repository } from 'typeorm';
 import { Application } from './application.entity';
 
 @Injectable()
@@ -45,6 +45,16 @@ export class ApplicationsService {
   getPendingAdmin(year: string): Promise<Application[]> {
     return this.applicationsRepository.find({
       where: { status: ApplicationStatus.PENDING_ADMIN, year },
+      relations: ['student', 'topic', 'mentor'],
+    });
+  }
+
+  getPendingGrade(): Promise<Application[]> {
+    return this.applicationsRepository.find({
+      where: {
+        status: ApplicationStatus.SCHEDULED,
+        defenseDate: LessThan(new Date()),
+      },
       relations: ['student', 'topic', 'mentor'],
     });
   }

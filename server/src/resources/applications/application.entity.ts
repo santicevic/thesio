@@ -26,6 +26,9 @@ export class Application {
   @Column('text')
   year: string;
 
+  @Column('int', { nullable: true })
+  grade: number;
+
   @Column({
     type: 'enum',
     enum: ApplicationStatus,

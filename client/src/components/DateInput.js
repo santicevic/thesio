@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { Controller } from 'react-hook-form';
 
@@ -10,11 +10,11 @@ const TextInput = ({ name, control, errors = {}, ...rest }) => {
         name={name}
         control={control}
         render={({ field }) => (
-          <KeyboardDatePicker
+          <KeyboardDateTimePicker
             error={!!errors[name]}
-            disableToolbar
             variant="inline"
-            format="MM/dd/yyyy"
+            format="MM/dd/yyyy HH:mm"
+            ampm
             margin="normal"
             {...rest}
             {...field}

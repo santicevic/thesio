@@ -10,7 +10,7 @@ import DateInput from '../../components/DateInput';
 import applicationsApi from '../../api/applications';
 import { queryClient } from '../..';
 
-const PromoteApplication = ({ applicationToPromote, handleClose }) => {
+const DefenseApplyForm = ({ applicationToPromote, handleClose }) => {
   const classes = useStyles();
   const [hasDuplicate, setHasDuplicate] = useState(false);
   const { data } = useQuery('professors', usersApi.getProfessors);
@@ -33,7 +33,7 @@ const PromoteApplication = ({ applicationToPromote, handleClose }) => {
     const hasDuplicates = new Set(Object.values(formData)).size !== Object.values(formData).length;
     if (hasDuplicates) return setHasDuplicate(true);
     await applicationsApi.scheduleDefense({ ...formData, applicationId: applicationToPromote.id });
-    queryClient.invalidateQueries('applications');
+    queryClient.invalidateQueries('pendingDefenseApplications');
     handleClose();
   };
 
@@ -99,7 +99,7 @@ const PromoteApplication = ({ applicationToPromote, handleClose }) => {
   );
 };
 
-export default PromoteApplication;
+export default DefenseApplyForm;
 
 const schema = yup.object().shape({
   president: yup.number().required(),

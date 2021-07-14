@@ -2,12 +2,14 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   UseGuards,
   Body,
   Request,
   ConflictException,
   BadRequestException,
   UnauthorizedException,
+  NotFoundException,
 } from '@nestjs/common';
 import { ApplicationStatus, UserRole } from 'src/database/enums';
 import { Roles } from 'src/decorators/roles';
@@ -46,7 +48,7 @@ export class ApplicationsController {
     );
   }
 
-  @Post('apply-defense')
+  @Patch('apply-defense')
   @Roles(UserRole.STUDENT)
   @UseGuards(RolesGuard)
   async applyDefense(@Request() req): Promise<Application> {
@@ -58,7 +60,7 @@ export class ApplicationsController {
       ({ year }) => year === yearConfig.value,
     );
     if (!application) {
-      throw new BadRequestException('Application does not exist');
+      throw new NotFoundException('Application does not exist');
     }
     if (application.status !== ApplicationStatus.DRAFT) {
       throw new ConflictException('Application already submited');
@@ -75,10 +77,10 @@ export class ApplicationsController {
     return this.applicationsService.getByMentor(req.user.id);
   }
 
-  @Get('admin')
+  @Get('pending-defenses')
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
-  async getAdminApplications() {
+  async getPendingDefenses() {
     const yearConfig = await this.configsService.getByKey('year');
     return this.applicationsService.getPendingAdmin(yearConfig.value);
   }
@@ -105,7 +107,7 @@ export class ApplicationsController {
     });
   }
 
-  @Post('mentor-accept')
+  @Patch('mentor-accept')
   @Roles(UserRole.PROFESSOR)
   @UseGuards(RolesGuard)
   async mentorAccept(@Body() body, @Request() req): Promise<Application> {
@@ -125,13 +127,17 @@ export class ApplicationsController {
     return this.applicationsService.save(application);
   }
 
-  @Post('schedule')
+  @Patch('schedule')
   @Roles(UserRole.ADMIN)
   @UseGuards(RolesGuard)
   async shedule(@Body() body): Promise<Application> {
     const application = await this.applicationsService.getById(
       body.applicationId,
     );
+
+    if (!application) {
+      throw new NotFoundException('Application not found');
+    }
 
     const comitee = [
       application.mentor.id,
@@ -154,6 +160,48 @@ export class ApplicationsController {
     application.third = body.third;
     application.fourth = body.fourth;
     application.defenseDate = body.defenseDate;
+
+    return this.applicationsService.save(application);
+  }
+
+  @Get('pending-grade')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(RolesGuard)
+  getPendingGrade(): Promise<Application[]> {
+    return this.applicationsService.getPendingGrade();
+  }
+
+  @Patch('set-grade')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(RolesGuard)
+  async setGrade(@Body() body): Promise<Application> {
+    const application = await this.applicationsService.getById(
+      body.applicationId,
+    );
+
+    if (!application) {
+      throw new NotFoundException('Application not found');
+    }
+
+    if (
+      !body.grade ||
+      Number.isNaN(+body.grade) ||
+      body.grade > 5 ||
+      body.grade < 1
+    ) {
+      throw new BadRequestException('Invalid request body');
+    }
+
+    if (body.grade === 1) {
+      application.status = ApplicationStatus.DRAFT;
+      application.defenseDate = null;
+      application.president = null;
+      application.third = null;
+      application.fourth = null;
+    } else {
+      application.status = ApplicationStatus.DONE;
+      application.grade = body.grade;
+    }
 
     return this.applicationsService.save(application);
   }

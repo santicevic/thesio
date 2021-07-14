@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import TextInput from '../../components/TextInput';
 import SelectInput from '../../components/SelectInput';
-import { ROLES, STUDIES, LEVELS } from '../../constants';
+import { ROLES, STUDIES, LEVELS, ROLE_TRANSLATION, STUDIES_TRANSLATION, LEVELS_TRANSLATION } from '../../constants';
 import usersApi from '../../api/users';
 import { queryClient } from '../../index';
 
@@ -68,7 +68,7 @@ const UserAddEdit = ({ userToAddEdit, handleClose }) => {
             control={control}
             fullWidth
             label="Rola"
-            options={Object.values(ROLES).map(role => ({ value: role, label: role }))}
+            options={Object.values(ROLES).map(role => ({ value: role, label: ROLE_TRANSLATION[role] }))}
           />
           <SelectInput
             name="study"
@@ -76,7 +76,7 @@ const UserAddEdit = ({ userToAddEdit, handleClose }) => {
             control={control}
             fullWidth
             label="Smjer"
-            options={Object.values(STUDIES).map(study => ({ value: study, label: study }))}
+            options={Object.values(STUDIES).map(study => ({ value: study, label: STUDIES_TRANSLATION[study] }))}
           />
           {pickedRole === ROLES.STUDENT && (
             <SelectInput
@@ -85,7 +85,7 @@ const UserAddEdit = ({ userToAddEdit, handleClose }) => {
               control={control}
               fullWidth
               label="Razina"
-              options={Object.values(LEVELS).map(level => ({ value: level, label: level }))}
+              options={Object.values(LEVELS).map(level => ({ value: level, label: LEVELS_TRANSLATION[level] }))}
             />
           )}
         </DialogContent>

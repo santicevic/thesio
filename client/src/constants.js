@@ -45,5 +45,31 @@ export const APPLICATION_STATUS = {
   PENDING_ADMIN: 'PENDING_ADMIN',
   SCHEDULED: 'SCHEDULED',
   DONE: 'DONE',
-  FAILED: 'FAILED',
+};
+
+export const ROLE_TRANSLATION = {
+  STUDENT: 'Student',
+  PROFESSOR: 'Profesor',
+  ADMIN: 'Admin',
+};
+
+export const STUDIES_TRANSLATION = {
+  PEIT: 'PEIT',
+  NAUTICAL: 'Pomorska nautika',
+  MECHANICAL: 'Brodostrojarstvo',
+  MANAGEMENT: 'Pomorski menadžment',
+  MARINA: 'Jahte i marine',
+};
+
+export const LEVELS_TRANSLATION = {
+  BACHELORES: 'Preddiplomski',
+  MASTERS: 'Diplomski',
+};
+
+export const APPLICATION_STATUS_TRANSLATION = {
+  DRAFT: 'U pripremi',
+  PENDING_MENTOR: 'Čeka potvrdu mentora',
+  PENDING_ADMIN: 'Čeka potvrdu studentske službe',
+  SCHEDULED: 'Zakazano',
+  DONE: 'Završeno',
 };

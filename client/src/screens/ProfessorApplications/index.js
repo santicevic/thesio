@@ -15,7 +15,7 @@ import { Check as CheckIcon, Clear as ClearIcon } from '@material-ui/icons';
 import { format } from 'date-fns';
 import { useQuery } from 'react-query';
 import applicationsApi from '../../api/applications';
-import { APPLICATION_STATUS } from '../../constants';
+import { APPLICATION_STATUS, APPLICATION_STATUS_TRANSLATION } from '../../constants';
 import { queryClient } from '../..';
 
 const ProfessorApplications = () => {
@@ -48,7 +48,7 @@ const ProfessorApplications = () => {
               <TableCell>
                 {student.firstName} {student.lastName}
               </TableCell>
-              <TableCell>{status}</TableCell>
+              <TableCell>{APPLICATION_STATUS_TRANSLATION[status]}</TableCell>
               <TableCell>{format(new Date(applicationDate), 'MM/dd/yyyy')}</TableCell>
               <TableCell>{defenseDate ? format(new Date(defenseDate), 'MM/dd/yyyy') : 'Nije definirano'}</TableCell>
               <TableCell>
