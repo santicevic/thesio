@@ -46,8 +46,9 @@ const ApplicationDetails = () => {
             <Typography variant="body1">Status: {APPLICATION_STATUS_TRANSLATION[data.status]}</Typography>
             <Typography variant="body1">Prijavljeno: {format(new Date(data.applicationDate), 'MM/dd/yyyy')}</Typography>
             <Typography variant="body1">
-              Obrana: {data.defenseDate ? format(new Date(data.defenseDate), 'MM/dd/yyyy') : 'Nije prijavljena'}
+              Obrana: {data.defenseDate ? format(new Date(data.defenseDate), 'MM/dd/yyyy HH:MM') : 'Nije prijavljena'}
             </Typography>
+            <Typography variant="body1">Ocjena: {data.grade || 'Nije ocijenjeno'}</Typography>
           </Box>
         </Grid>
         <Grid item md={6} xs={12}>
