@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const requestConfig = {
-  baseURL: 'http://localhost:3001',
+  baseURL: 'http://localhost:8080',
   headers: {
     'Content-Type': 'application/json',
   },
