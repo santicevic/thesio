@@ -23,7 +23,6 @@ export class AuthController {
     res.cookie('token', jwt, {
       httpOnly: true,
       sameSite: 'None',
-      secure: true,
     });
     res.send(req.user);
   }
@@ -34,7 +33,6 @@ export class AuthController {
     res.clearCookie('token', {
       httpOnly: true,
       sameSite: 'None',
-      secure: true,
     });
   }
 }
